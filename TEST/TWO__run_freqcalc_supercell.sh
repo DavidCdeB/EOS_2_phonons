@@ -5,32 +5,17 @@ run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
 
 ScriptDir=`pwd`
 
-VOLUMES="109.391537
-110.840213
-112.366531
-113.896849
-115.432482
-118.551116
-116.974380
-120.133809
-121.725312
-123.325636
-125.845303"
+VOLUMES=" [copy here the volumes you need]
+"
 
 cd $ScriptDir
-for i in ${VOLUMES}
-
-do 
-pwd
-echo $i
+for i in ${VOLUMES}; do 
 cd DISPERSI
 cd $i 
-pwd
 cd SCELPHONO_Landau
 rm -Rf Freqcalc_Supercell_Landau
 mkdir Freqcalc_Supercell_Landau
 cd $ScriptDir
-pwd
 done
 cd $ScriptDir
 

@@ -6,24 +6,16 @@ run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
 
 ScriptDir=`pwd`
 
-SCANMODE_1_FILES="109.391537 
-110.840213 
-112.366531
-113.896849"
+SCANMODE_1_FILES="
+[copy here the volumes you need for scanning negative phonon 1]
+"
 
-SCANMODE_2_FILES="109.391537 
-112.366531 
-113.896849   
-115.432482"  
-
+SCANMODE_2_FILES="
+[copy here the volumes you need for scanning negative phonon 2]
+"
 
 # SCANMODE 1
-for i in ${SCANMODE_1_FILES}
-do
-pwd
-echo $i
-
-pwd
+for i in ${SCANMODE_1_FILES}; do
 
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*displacement/Findsym/
 
@@ -67,15 +59,13 @@ done
 cd $ScriptDir
 
 # SCANMODE 1 Running:
-for i in ${SCANMODE_1_FILES}
-do 
-pwd
+for i in ${SCANMODE_1_FILES}; do 
 
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*displacement/Findsym/${i}_findsym_numbers_0_01/CVOLOPT_indicating_SG
 
 $run  ${i} 64 72:00
 
-sed -i s/select=3:ncpus=24/select=3:ncpus=24/ ${i}.qsub
+sed -i s/select=3:ncpus=24/select=4:ncpus=24/ ${i}.qsub
 
 qsub -q pqnmh ${i}.qsub
 
@@ -86,12 +76,7 @@ done
 cd $ScriptDir
 
 # SCANMODE 2
-for i in ${SCANMODE_2_FILES}
-do
-pwd
-echo $i
-
-pwd
+for i in ${SCANMODE_2_FILES}; do
 
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_2/cry14v4/At_*displacement/Findsym/
 
@@ -135,15 +120,13 @@ done
 cd $ScriptDir
 
 # SCANMODE 2 Running:
-for i in ${SCANMODE_2_FILES}
-do 
-pwd
+for i in ${SCANMODE_2_FILES}; do 
 
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_2/cry14v4/At_*displacement/Findsym/${i}_findsym_numbers_0_01/CVOLOPT_indicating_SG
 
 $run  ${i} 64 72:00
 
-sed -i s/select=3:ncpus=24/select=3:ncpus=24/ ${i}.qsub
+sed -i s/select=3:ncpus=24/select=4:ncpus=24/ ${i}.qsub
 
 qsub -q pqnmh ${i}.qsub
 

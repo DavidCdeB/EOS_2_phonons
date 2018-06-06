@@ -1,16 +1,13 @@
 #
 source ~/.profile
 
-#run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
-run='/home/dcarrasc/scripts_cry17/qcry'
+run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
 
 ScriptDir=`pwd`
 
-SCANMODE_1_FILES="117.743646
-116.184030
-114.632273
-113.087568
-111.593876"
+SCANMODE_1_FILES="
+[copy here the volumes you need for scanning negative phonon 1]
+"
 
 cd $ScriptDir
 
@@ -20,9 +17,9 @@ for i in ${SCANMODE_1_FILES}; do
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*displacement/Findsym/${i}_findsym_numbers_0_1/CVOLOPT_indicating_SG
 
 
-rm -Rf SCELPHONO_121_1-21_210
-mkdir SCELPHONO_121_1-21_210
-cd SCELPHONO_121_1-21_210
+rm -Rf SCELPHONO_Landau
+mkdir SCELPHONO_Landau
+cd SCELPHONO_Landau
 Workdir=`pwd`
 
 cd $ScriptDir
@@ -47,7 +44,7 @@ cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*disp
 
 $run *.d12 64 72:00                                     
 
-sed -i s/select=3:ncpus=24/select=16:ncpus=24/ *.qsub
+sed -i s/select=3:ncpus=24/select=4:ncpus=24/ *.qsub
 
 qsub -q pqnmh  *.qsub
 

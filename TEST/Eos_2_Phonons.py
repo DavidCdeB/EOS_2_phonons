@@ -4,13 +4,27 @@
 import sys
 import os
 import glob
+import commands
 
-global N_atom_irreducible_unit
-N_atom_irreducible_unit = 3
+#global N_atom_irreducible_unit
+#N_atom_irreducible_unit = 3
 
 path='./'
-name = os.path.join(path, '*.out')
-filename = glob.glob(name)
+filename = os.path.join(path, '*.out')
+#filename = glob.glob(name)
+for fname in glob.glob(filename):
+  print fname
+
+
+CRYSTAL_word = "CRYSTAL$"
+Title_CRYSTAL_IFLAGs  = (commands.getstatusoutput("grep -C 1 '%s' %s"%(CRYSTAL_word, filename)))[1]
+Space_Group = (commands.getstatusoutput("cat %s | grep '%s' -A2 | tail -n 1" %(filename, CRYSTAL_word)))[1]
+
+print 'Title_CRYSTAL_IFLAGs = ', Title_CRYSTAL_IFLAGs
+print 'Space_Group  = ', Space_Group
+N_atom_irreducible_unit = (commands.getstatusoutput("cat %s | grep '%s' -A4 | tail -n 1" %(filename, CRYSTAL_word)))[1]
+print 'N_atom_irreducible_unit = ', N_atom_irreducible_unit
+
 
 VOLUMES = []
 P0 = []
@@ -20,7 +34,7 @@ Xs = []
 Ys = []
 Zs = []
 
-with open(filename[0]) as gout:
+with open(fname) as gout:
     final_optimized_geometry = False
     for line in gout:
         if 'FINAL OPTIMIZED GEOMETRY' in line:
@@ -99,13 +113,16 @@ for block_i, vol_i in zip(range(0, len(rows), interval), range(len(VOLUMES))):
     lines += ['   '.join(row) for row in rows[block_i : block_i + interval]]
 
     # Write the file:
-    with open(VOLUMES[vol_i] + '.d12', 'w') as f:
+    with open(VOLUMES[vol_i] + '_FREQCALC.d12', 'w') as f:
 
         # Preceding lines:
-        f.write("""Title
-CRYSTAL
-0 0 0
-167\n""")
+#       f.write("""Title
+#CRYSTAL
+#0 0 0
+#[enter the Space Group number here]\n""")
+
+        # Preceding lines:
+        f.write(Title_CRYSTAL_IFLAGs + '\n' + Space_Group + '\n')
 
         # Lines of data:
         for line in lines:

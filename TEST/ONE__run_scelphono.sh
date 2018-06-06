@@ -5,45 +5,44 @@ run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
 
 ScriptDir=`pwd`
 
+#ARRAY=()
+#for i in `ls *_FREQCALC.d12`; do 
+#echo $i 
+#j=`echo $i | cut -f 1 -d '_'`
+#echo $j
+#ARRAY+=($j)
+#echo ^^^^ $ARRAY
+#done
+
+#echo 'fine'
+#echo $ARRAY
+
+#exit
+
+rm -Rf DISPERSI
 mkdir DISPERSI
 
-VOLUMES="109.391537
-110.840213
-112.366531
-113.896849
-115.432482
-118.551116
-116.974380
-120.133809
-121.725312
-123.325636
-125.845303"
+VOLUMES=" [copy here the volumes you need]
+"
 
 cd $ScriptDir
-for i in ${VOLUMES}
+for i in ${VOLUMES}; do 
 
-do 
-pwd
-echo $i
-pwd
 cd DISPERSI
 rm -Rf $i
 mkdir $i
-pwd
+
 cd $i 
-pwd
 rm -Rf SCELPHONO_Landau
 mkdir SCELPHONO_Landau
-pwd
 cd SCELPHONO_Landau
 cd $ScriptDir
-pwd
 done
+
 cd $ScriptDir
 
 # RUNNING:
-for i in ${VOLUMES}
-do
+for i in ${VOLUMES}; do
 cp ${i}.d12  ./DISPERSI/$i/SCELPHONO_Landau
 cd ./DISPERSI/$i/SCELPHONO_Landau
 

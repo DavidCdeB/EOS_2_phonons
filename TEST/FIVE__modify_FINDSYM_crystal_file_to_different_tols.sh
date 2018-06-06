@@ -7,31 +7,16 @@ run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
 
 ScriptDir=`pwd`
 
-SCANMODE_1_FILES="109.391537
-110.840213
-112.366531
-113.896849
-115.432482
-118.551116
-116.974380
-120.133809
-121.725312"
+SCANMODE_1_FILES="
+[copy here the volumes you need for scanning negative phonon 1]
+"
 
-SCANMODE_2_FILES="109.391537
-110.840213
-112.366531
-113.896849
-115.432482"
-
-
+SCANMODE_2_FILES="
+[copy here the volumes you need for scanning negative phonon 2]
+"
 
 # SCANMODE 1
-for i in ${SCANMODE_1_FILES}
-do
-pwd
-echo $i
-
-pwd
+for i in ${SCANMODE_1_FILES}; do
 
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*displacement/
 
@@ -88,12 +73,7 @@ cd $ScriptDir
 
 
 # SCANMODE 2
-for i in ${SCANMODE_2_FILES}
-do
-pwd
-echo $i
-
-pwd
+for i in ${SCANMODE_2_FILES}; do
 
 cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_2/cry14v4/At_*displacement/
 

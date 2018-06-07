@@ -8,7 +8,9 @@
 
 1. [What is the `EOS_2_phonons` program ?](#example)
 2. [Data flow](#example2)
-3. [Contributing](#example3)
+3. [Test](#example3)
+4. [How to cite](#example4)
+5. [Contributing](#example5)
 
 
 <a name="example"></a>
@@ -125,5 +127,44 @@ You would have to change the `CVOLOPT_fragment`, which is the
 tail for the input file, specifying the basis set you are using.
 
 * Run `SEVEN.sh`. This will run the constant volume optimization. 
+
+* At this point, if the space group of the broken symmetry structure starts
+with `P`, then the primitve cell is equivalent to the crystalographic. In this case,
+you should run `EIGHT.sh`.
+If the broken symmetry structure contains a crystallographic cell
+different from a primitve, you should run `EIGHT.sh` by
+changing every instance of `Eos_2_Phonons_when_threre_is_no_crystallographic_cell.py`
+by `Eos_2_Phonons.py`.
+
+<a name="example3"></a>
+## Test
+
+Under the `TEST` folder, you will find all the programs
+needed, together with a `*out` folder
+with the frequency output.
+
+
+<a name="example4"></a>
+## How to cite
+
+Please cite the following reference when using this code:
+
+Carrasco-Busturia, D., Erba, A., Mallia, G., Mellan, T. A. and Harrison, N. M. "Computed phase stability and phase transition mechanisms in CaCO3 at finite temperature and pressure" _In progress_
+
+<a name="example5"></a>
+## Contributing
+
+`QHA` is free software released under the Gnu Public Licence version 3.
+All contributions to improve this code are more than welcome.
+
+* Have a look at GitHub's ["How to contribute"](https://guides.github.com/activities/contributing-to-open-source/#contributing).
+
+* If you are familiar with `git`: fork this repository and submit a pull request.
+
+* If you are not familiar with `git`:
+
+    * If something should be improved, open an issue here on GitHub
+    * If you think a new feature would be interesting, open an issue
+    * If you need a particular feature for your project contact me directly.
 
 

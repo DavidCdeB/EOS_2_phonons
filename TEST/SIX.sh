@@ -1,0 +1,139 @@
+#
+
+
+source ~/.profile
+
+run='/home/gmallia/CRYSTAL17_cx1/v1/qcry'
+
+ScriptDir=`pwd`
+
+SCANMODE_1_FILES="
+[copy here the volumes you need for scanning negative phonon 1]
+"
+
+SCANMODE_2_FILES="
+[copy here the volumes you need for scanning negative phonon 2]
+"
+
+# SCANMODE 1
+for i in ${SCANMODE_1_FILES}; do
+
+cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*displacement/Findsym/
+
+rm -Rf ${i}_findsym_numbers_0_1
+mkdir ${i}_findsym_numbers_0_1
+
+cp ${i}_findsym_numbers_0_1.cif ./${i}_findsym_numbers_0_1
+
+cd ${i}_findsym_numbers_0_1 
+sed -i '/FINDSYM, Version/,/CIF file created by FINDSYM/d' ${i}_findsym_numbers_0_1.cif
+
+cif2cell  ${i}_findsym_numbers_0_1.cif  -p crystal09
+mv *.d12 ${i}_findsym_numbers.d12
+
+sed -i '1,6d' ${i}_findsym_numbers.d12
+
+sed  -i "1s/.*/Calcite/" ${i}_findsym_numbers.d12
+
+sed -i 's/\! Ca//g' ${i}_findsym_numbers.d12
+sed -i 's/\! O//g' ${i}_findsym_numbers.d12
+sed -i 's/\! C//g' ${i}_findsym_numbers.d12
+sed -i '$d' ${i}_findsym_numbers.d12
+
+mkdir CVOLOPT_indicating_SG
+cp ${i}_findsym_numbers.d12 ./CVOLOPT_indicating_SG
+cd CVOLOPT_indicating_SG
+
+WorkingDir=`pwd`
+
+cd $ScriptDir
+
+cp CVOLOPT_fragment  $WorkingDir
+
+cd $WorkingDir
+
+cat ${i}_findsym_numbers.d12  CVOLOPT_fragment > ${i}.d12
+
+cd $ScriptDir
+done 
+
+cd $ScriptDir
+
+# SCANMODE 1 Running:
+for i in ${SCANMODE_1_FILES}; do 
+
+cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_1/cry14v4/At_*displacement/Findsym/${i}_findsym_numbers_0_1/CVOLOPT_indicating_SG
+
+$run  ${i} 64 72:00
+
+sed -i s/select=3:ncpus=24/select=4:ncpus=24/ ${i}.qsub
+
+qsub -q pqnmh ${i}.qsub
+
+pwd  
+cd $ScriptDir
+
+done
+cd $ScriptDir
+
+# SCANMODE 2
+for i in ${SCANMODE_2_FILES}; do
+
+cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_2/cry14v4/At_*displacement/Findsym/
+
+rm -Rf ${i}_findsym_numbers_0_1
+mkdir ${i}_findsym_numbers_0_1
+
+cp ${i}_findsym_numbers_0_1.cif ./${i}_findsym_numbers_0_1
+
+cd ${i}_findsym_numbers_0_1 
+sed -i '/FINDSYM, Version/,/CIF file created by FINDSYM/d' ${i}_findsym_numbers_0_1.cif
+
+cif2cell  ${i}_findsym_numbers_0_1.cif  -p crystal09
+mv *.d12 ${i}_findsym_numbers.d12
+
+sed -i '1,6d' ${i}_findsym_numbers.d12
+
+sed  -i "1s/.*/Calcite/" ${i}_findsym_numbers.d12
+
+sed -i 's/\! Ca//g' ${i}_findsym_numbers.d12
+sed -i 's/\! O//g' ${i}_findsym_numbers.d12
+sed -i 's/\! C//g' ${i}_findsym_numbers.d12
+sed -i '$d' ${i}_findsym_numbers.d12
+
+mkdir CVOLOPT_indicating_SG
+cp ${i}_findsym_numbers.d12 ./CVOLOPT_indicating_SG
+cd CVOLOPT_indicating_SG
+
+WorkingDir=`pwd`
+
+cd $ScriptDir
+
+cp CVOLOPT_fragment  $WorkingDir
+
+cd $WorkingDir
+
+cat ${i}_findsym_numbers.d12  CVOLOPT_fragment > ${i}.d12
+
+cd $ScriptDir
+done 
+
+cd $ScriptDir
+
+# SCANMODE 2 Running:
+for i in ${SCANMODE_2_FILES}; do 
+
+cd ./${i}/SCELPHONO_Landau/Freqcalc_Supercell_Landau/SCANMODE_2/cry14v4/At_*displacement/Findsym/${i}_findsym_numbers_0_1/CVOLOPT_indicating_SG
+
+$run  ${i} 64 72:00
+
+sed -i s/select=3:ncpus=24/select=4:ncpus=24/ ${i}.qsub
+
+qsub -q pqnmh ${i}.qsub
+
+pwd  
+cd $ScriptDir
+
+done
+cd $ScriptDir
+

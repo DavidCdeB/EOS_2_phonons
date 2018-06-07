@@ -141,6 +141,11 @@ different from a primitve, you should run `EIGHT.sh` by
 changing every instance of `Eos_2_Phonons_when_threre_is_no_crystallographic_cell.py`
 by `Eos_2_Phonons.py`.
 
+<p align="center">
+  <img src="https://github.com/DavidCdeB/EOS_2_phonons/blob/master/Images_for_README_md/ONE_TWO.svg">
+</p>
+
+
 <a name="example3"></a>
 ## Test
 

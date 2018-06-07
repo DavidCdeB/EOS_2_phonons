@@ -27,7 +27,7 @@ The program was developed as part of [David Carrasco de Busturia PhD project](ht
 
 * Get the code: `git clone https://github.com/DavidCdeB/EOS_2_phonons`
 
-* Copy to the `EOS_2_phonons` created, the `*.out` output from the `EOS` calulation: 
+* Copy to the folder `EOS_2_phonons` created, the `*.out` output from the `EOS` calulation: 
  
  ```
  EOS
@@ -120,7 +120,6 @@ creating a set of different files corresponding to different tolerances:
 0_00001.FINDSYM -> 0.00001 tolerance
 0_000001.FINDSYM -> 0.000001 tolerance
 0.FINDSYM -> 0 tolerance
-
 ```
 Once done this, the findsym program will run,
 and will generate a `cif` file for each tolerance.

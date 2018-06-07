@@ -11,20 +11,23 @@
 3. [Test](#example3)
 4. [How to cite](#example4)
 5. [Contributing](#example5)
+6. [References](#example6)
 
 
 <a name="example"></a>
 ## What is the `EOS_2_phonons` program ?
 
  `EOS_2_phonons` is a program for computational chemistry and physics that allows to automate the runs for frequency calculations, and breaking symmetry over different volumes.
-This allows to then perform a quasi-harmonic approximation analyisis with the [`QHA_2D` program](https://github.com/DavidCdeB/QHA_2D)
+The programs on this repository allow to obtain the needed outputs in order to further perform a quasi-harmonic approximation analyisis with the [`QHA_2D` program](https://github.com/DavidCdeB/QHA_2D)
 
 The program was developed as part of [David Carrasco de Busturia PhD project](https://www.imperial.ac.uk/people/d.carrasco-de-busturia/) at [Prof. Nicholas Harrison's Computational Materials Science Group](http://www.imperial.ac.uk/computational-materials-science/), Imperial College London. The program was used to investigate the phase diagram and phase transitions mechanisms on the calcium carbonate system.
 
 <a name="example2"></a>
 ## Data flow
 
-* The starting point is the `*.out` output from the `EOS` calulation: 
+* Get the code: `git clone https://github.com/DavidCdeB/EOS_2_phonons`
+
+* Copy to the `EOS_2_phonons` created, the `*.out` output from the `EOS` calulation: 
  
  ```
  EOS
@@ -35,7 +38,7 @@ The program was developed as part of [David Carrasco de Busturia PhD project](ht
 which contains the constant-volume optimization for
 several geometries.
 
-* The program `Eos_2_Phonons.py`prepares a frequency calculation input for each geometry.
+* Run the program `Eos_2_Phonons.py`. This will prepare a frequency calculation input for each geometry.
 Before running this program, you should edit it and substitute `[supercell expansion matrix here]`, `[basis set here]` and `[functional here]`
 by, respectively,
 the adequate supercell for the phonon calculation, the proper basis set
@@ -43,14 +46,17 @@ and the DFT functional.
 
 * Run `ONE.sh`. This will create the directories corresponding to each volume, and will send the jobs to run.
 
-* Negative phonons found at certain volumes can be detedted 
-by the program [search_neg_freqs](https://github.com/DavidCdeB/search_neg_freqs).
+* At this point, we need to detect negative phonons found at certain volumes.
+These can be detected by running the programs inside the repository
+[search_neg_freqs](https://github.com/DavidCdeB/search_neg_freqs).
+Read the instructions in this repository, so that then you can identify
+which volumes contain a imaginary (negative) frequency.
  
-* For the imaginary phonon modes, in order to distort the atomic coordinates along
-the eigenvectors, it is first necessary to bring these phonons back to the Gamma point.
+* The next step is to distort the atomic coordinates along
+the eigenvectors. It is first necessary to bring these phonons back to the Gamma point.
 In order words, perform `FREQCALC + SUPERCELL` type of
 calculations.
-Once detected which volumes contain negative phonon modes, you can edit 
+Edit 
 the `Eos_2_Phonons.py` so that it contains the following:
 
 ```
@@ -85,7 +91,7 @@ by this line:
     with open(VOLUMES[vol_i] + '_SCANMODE_1.d12', 'w') as f:
 ```
 
-or this line, if there is a second negative phonon mode: 
+or additionally by this line, if there is a second negative phonon mode: 
 
 ```
     with open(VOLUMES[vol_i] + '_SCANMODE_2.d12', 'w') as f:
@@ -95,13 +101,13 @@ or this line, if there is a second negative phonon mode:
 This will prepare the input files for the `SCANMODE` runs.
 
 * Run `THREE.sh`. This will run the scanmodes.
-Povide the list of volumes under the variable `SCANMODE_1_FILES`
+Provide the list of volumes under the variable `SCANMODE_1_FILES`
 or `SCANMODE_2_FILES`.
 
 * Run `FOUR.sh`. This will extract the geometry of the minimum
 energy displacement of the scanmode. In addition, it will prepare a "findsym"
 input file for CRYSTAL. This will allow you to obtain a `.FINDSYM` file,
-ready to be read by the `findsym` program [].
+ready to be read by the `findsym` program [1].
 
 * Run `FIVE.sh`. This will modify the tolerances of the `.FINDSYM` file,
 creating a set of different files corresponding to different tolerances:
@@ -119,7 +125,7 @@ creating a set of different files corresponding to different tolerances:
 Once done this, the findsym program will run,
 and will generate a `cif` file for each tolerance.
 
-* Run `SIX.sh`. This will run the `cif2cell` program over
+* Run `SIX.sh`. This will run the `cif2cell` program [2] over
 each of these `cif` files previously generated. An input file
 for a constant volume optimization run will be created for the
 most common tolerance used, 0.1.
@@ -167,4 +173,11 @@ All contributions to improve this code are more than welcome.
     * If you think a new feature would be interesting, open an issue
     * If you need a particular feature for your project contact me directly.
 
+
+<a name="example6"></a>
+## References
+
+[1] Stokes, Harold T. and Hatch, Dorian M., Journal of Applied Crystallography 2005, 38, 237-238
+
+[2] Björkman, T., Computer Physics Communications 182, 1183–1186 (2011)
 

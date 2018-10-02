@@ -33,7 +33,7 @@ Xs = []
 Ys = []
 Zs = []
 
-with open(filename[0]) as gout:
+with open(fname) as gout:
     final_optimized_geometry = False
     for line in gout:
         if 'FINAL OPTIMIZED GEOMETRY' in line:
